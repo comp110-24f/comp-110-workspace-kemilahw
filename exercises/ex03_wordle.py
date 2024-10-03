@@ -79,34 +79,40 @@ def emojified(guess: str, secret: str) -> str:
 
 def main(secret: str) -> None:
     """The entrypoint of the program and main game loop."""
-    num_turns: int = (
-        1  # keeps track of the number of turns; starts at 1 instead of 0 so the display of turns shows "Turn 1"
+    set_turns: int = (
+        6  # local variable to set the turns to 6 instead of typing 6 within the body
     )
+    num_turns: int = (
+        1  # keeps track of the number of turns (guesses); starts at 1 instead of 0 so the display of turns shows "Turn 1"
+    )
+    user_won: bool = False
     while (
-        num_turns <= 6
-    ):  # if the number of turns is less than or equal to the set amount of turns (6); enter the body
-        print(f"=== Turn {num_turns}/6 === ")  # print statement for the number of turns
-        word_guessed: str = input_guess(
-            len(secret)
-        )  # variable for the prompting the user for a guess, using the input_guess function with length of secret to match the parameter (int); this uses the secret word as an input
+        num_turns <= set_turns and not user_won
+    ):  # instructions were to "make game loop while the user still has turns left and has not yet won" instead of making it numb_guesses<= set_turns; this also makes the statement true
         print(
-            emojified(word_guessed, secret)
-        )  # print statement for the string concatenation of emojis
+            f"=== Turn {num_turns}/{set_turns} ==="
+        )  # print the current turn number; not by typing 6 in (use set_turns that is set as 6)
+        word_guessed = input_guess(
+            len(secret)
+        )  # prompting the users to enter their guess
+        guess_results = emojified(
+            word_guessed, secret
+        )  # codify the emoji result of the user's guess
+        print(guess_results)  # print the string concatenation of emojis
         if (
             word_guessed == secret
-        ):  # if the user_guess_2 (word guessed) is equal to the secret (secret word); enter body
-            print(
-                f"You won in {num_turns}/6 turns!"
-            )  # if its equal, print the statement with the amount turns it took to guess the secret word correctly
-            num_turns = 7  # changed the number of turns to 7, so the loop will exit after evaluating the while statement
+        ):  # ends game; do not have to change number of turns b/c the user has guessed correctly
+            user_won = True  # this becomes true because the user has won the game
         else:
-            num_turns += 1  # else increase the number of turns by 1 if the "if statement" isn't true
-            if (
-                num_turns > 6
-            ):  # if the number of turns are greater than the set amount (6) turns, then move into body
-                print(
-                    "X/6 - Sorry, try again tomorrow!"
-                )  # print statement for not guessing the correct word in 6 guesses or less
+            num_turns += 1  # increase by 1 to prevent infinite loop; this is the "next turn" if the user does not guess correctly
+    if user_won:
+        print(
+            f"You won in {num_turns}/{set_turns} !"
+        )  # print statement for the user winning
+    else:
+        print(
+            f"X/{set_turns} - Sorry, try again tomorrow!"
+        )  # print statement if the user does not win
 
 
 if __name__ == "__main__":
