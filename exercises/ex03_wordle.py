@@ -12,7 +12,7 @@ def input_guess(secret_word_len: int) -> str:
     while (
         len(user_guess) != secret_word_len
     ):  # evaluates the length of the "user_guess" not being equal to the length of "secret_word_len"; entering the body
-        user_guess: str = input(
+        user_guess = input(
             f"That wasn't {secret_word_len} chars! Try again: "
         )  # this prompts the user_guess to try again b/c the length of their guessed word doesn't equal the correct length
     print(
@@ -86,14 +86,14 @@ def main(secret: str) -> None:
         num_turns <= 6
     ):  # if the number of turns is less than or equal to the set amount of turns (6); enter the body
         print(f"=== Turn {num_turns}/6 === ")  # print statement for the number of turns
-        user_guess_2: str = input_guess(
+        word_guessed: str = input_guess(
             len(secret)
         )  # variable for the prompting the user for a guess, using the input_guess function with length of secret to match the parameter (int); this uses the secret word as an input
         print(
-            emojified(user_guess_2, secret)
+            emojified(word_guessed, secret)
         )  # print statement for the string concatenation of emojis
         if (
-            user_guess_2 == secret
+            word_guessed == secret
         ):  # if the user_guess_2 (word guessed) is equal to the secret (secret word); enter body
             print(
                 f"You won in {num_turns}/6 turns!"
