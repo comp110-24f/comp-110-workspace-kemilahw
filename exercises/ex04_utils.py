@@ -21,7 +21,7 @@ def all(nums: list[int], value: int) -> bool:
 
 def max(input: list[int]) -> int:
     """Returns the largest element in the list"""
-    larg_num: int = 0
+    larg_num: int = input[0]
     index: int = 0
     if (
         len(input) == 0
